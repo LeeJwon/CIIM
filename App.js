@@ -13,13 +13,11 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.front);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.on);
 
-  const takePicture = async () => {
-    if (this.Camera) {
-        const options = {quality: 1, base64: true};
-        const data = await this.Camera.takePictureAsync(options);
-        console.log(data);
+  const takePicture = () => {
+    if (this.camera) {
+      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
     }
-};
+  };
 
   useEffect(() => {
     (async () => {
@@ -44,6 +42,9 @@ export default function App() {
             backgroundColor: 'transparent',
             flexDirection: 'row',
           }}>
+          <Grid style={styles.topToolbar}>
+
+          </Grid>
           <Grid style={styles.bottomToolbar}>
 
           {/*flashmode stuff*/}
@@ -57,7 +58,7 @@ export default function App() {
             <Ionicons
               name={flash == Camera.Constants.FlashMode.on ? "md-flash" : 'md-flash-off'}
               color="white"
-              size={50}
+              size={40}
             />
             </TouchableOpacity>
           </Col>
@@ -66,7 +67,9 @@ export default function App() {
           <Col style={styles.alignCenter}>
           <TouchableOpacity
             onPress={() => takePicture()}>
-              <View style={[styles.captureBtn]}></View>
+              <View style={[styles.captureBtn, styles.captureBtn2]}>
+
+              </View>
             </TouchableOpacity>
           </Col>
 
@@ -80,7 +83,7 @@ export default function App() {
               <Ionicons
                 name="md-reverse-camera"
                 color="white"
-                size={50}
+                size={40}
               />
             </TouchableOpacity>
             </Col>
@@ -101,14 +104,22 @@ const styles = StyleSheet.create({
   bottomToolbar: {
   width: winWidth,
   position: 'absolute',
-  height: 100,
+  backgroundColor: 'black',
+  height: 90,
   bottom: 0,
   },
+  topToolbar: {
+    width: winWidth,
+    position: 'absolute',
+    backgroundColor: 'black',
+    height: 20,
+    bottom: 647,
+  },
   captureBtn: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     borderWidth: 2,
-    borderRadius: 80,
-    borderColor: "#FFFFFF",
-},
+    borderRadius: 70,
+    borderColor: "white",
+  },
 });
